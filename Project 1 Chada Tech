@@ -1,0 +1,263 @@
+//Project 3-1 By Marcus L for Cs-210
+
+#include <iostream>
+
+using namespace std;
+
+class Project1
+{
+private:
+    int hours24; // setting all of our INT data
+    int minutes;
+    int seconds;
+    int numberOfYears;
+    bool am_pm;
+
+
+    int CalcHour12(bool& am_pm)
+    {
+        if (hours24 <= 12)
+        {
+            am_pm = 0;
+            return hours24;
+        }
+        else
+        {
+            am_pm = 1;
+            return hours24 - 12;
+        }
+    };
+
+    void AddHour(void)
+    {
+        hours24++;
+
+        if (hours24 == 23)
+        {
+            hours24 = 0;
+        }
+    };
+
+    void AddMinute(void)
+    {
+        minutes++;
+
+        if (minutes == 59)
+        {
+            minutes = 0;
+            AddHour();
+        }
+    };
+
+    void AddSecond(void)
+    {
+        seconds++;
+
+        if (seconds == 59)
+        {
+            seconds = 0;
+            AddMinute();
+        }
+    };
+
+    void DisplayTime(void)
+    {
+        // adds asteriks 
+        for (int i = 0; i < 27; i++)
+        {
+            cout << "*";
+        }
+
+        // adds spacing
+        cout << "    ";
+
+        // adds asterisks
+        for (int i = 0; i < 27; i++)
+        {
+            cout << "*";
+        }
+
+        // adds spacing
+        cout << endl;
+
+        // clock headers
+        cout << "*      12-Hour Clock      *    *      24-Hour Clock      *" << endl;
+
+        // 12-hour
+        cout << "*       ";
+        // prints hours
+        if (CalcHour12(am_pm) < 10)
+        {
+            cout << "0" << CalcHour12(am_pm) << ":";
+        }
+        else
+        {
+            cout << CalcHour12(am_pm) << ":";
+        }
+        // prints minutes
+        if (minutes < 10)
+        {
+            cout << "0" << minutes << ":";
+        }
+        else
+        {
+            cout << minutes << ":";
+        }
+        // prints seconds
+        if (seconds < 10)
+        {
+            cout << "0" << seconds << "          *" << endl;
+        }
+        else
+        {
+            cout << seconds;
+        }
+        // prinst am/pm
+        if (am_pm == 0)
+        {
+            cout << " AM" << "       *";
+        }
+        else
+        {
+            cout << " PM" << "       *";
+        }
+
+        // adds spacing
+        cout << "    ";
+
+        // 24-hour
+        cout << "*        ";
+        // prints hours
+        if (hours24 < 10)
+        {
+            cout << "0" << hours24 << ":";
+        }
+        else
+        {
+            cout << hours24 << ":";
+        }
+        // prints minutes
+        if (minutes < 10)
+        {
+            cout << "0" << minutes << ":";
+        }
+        else
+        {
+            cout << minutes << ":";
+        }
+        // prints seconds
+        if (seconds < 10)
+        {
+            cout << "0" << seconds << "          *" << endl;
+        }
+        else
+        {
+            cout << seconds << "         *" << endl;
+        }
+
+        // adds asterisks
+        for (int i = 0; i < 27; i++)
+        {
+            cout << "*";
+        }
+
+        // adds spacing
+        cout << "    ";
+
+        // adds asterisks
+        for (int i = 0; i < 27; i++)
+        {
+            cout << "*";
+        }
+    };
+
+    void DisplayMenu(void)
+    {
+        // adds asterisks
+        for (int i = 0; i < 27; i++)
+        {
+            cout << "*";
+        }
+
+        cout << endl;
+
+        // adds ability to add hour
+        cout << "* 1 - Add One Hour        *" << endl;
+
+        // adds ability to add minute
+        cout << "* 2 - Add One Minute      *" << endl;
+
+        // adds ability to add second
+        cout << "* 3 - Add One Second      *" << endl;
+
+        // terminates program
+        cout << "* 4 - Exit Program        *" << endl;
+
+        // adds *
+        for (int i = 0; i < 27; i++)
+        {
+            cout << "*";
+        }
+    };
+
+public:
+    void ClearScreen(void) // object_name.ClearScreen()
+    {
+        system("CLS");
+    };
+
+    void Display(void) // object_name.Display()
+    {
+        DisplayTime();
+        cout << endl;
+        DisplayMenu();
+    };
+
+    bool ReadUserInput(void) // object_name.ReadUserInput()
+    {
+        int input;
+        cin >> input;
+
+        switch (input)
+        {
+        case 1:
+            AddHour();
+            return false;
+            break;
+        case 2:
+            AddMinute();
+            return false;
+            break;
+        case 3:
+            AddSecond();
+            return false;
+            break;
+        case 4:
+            return true;
+            break;
+        }
+    };
+
+    void Init(int hour, int minute, int second)
+    {
+        hours24 = hour;
+        minutes = minute;
+        seconds = second;
+    };
+};
+
+int main(void)
+{
+    Project1 project1; // tells compiler to build upon class
+
+    project1.Init(8, 3, 15); // 
+
+    while (1)
+    {
+        project1.ClearScreen(); // calls function
+        project1.Display();
+        cout << endl;
+        if (project1.ReadUserInput())
+            break;         // Exit main()
+    }
+}
